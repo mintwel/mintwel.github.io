@@ -16,6 +16,7 @@ I am a fast-learner and willing independently to seek out new opportunities for 
 ## University of Washington (Seattle, WA)
 
 * [University of Washington][] Public Research University *
+![](https://environment.uw.edu/wp-content/uploads/2016/01/uw-flag.png)
 
 ** Graduate Researcher ** (September 2020 - Present)
 
