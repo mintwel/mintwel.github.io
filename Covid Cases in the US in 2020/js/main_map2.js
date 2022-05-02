@@ -11,6 +11,7 @@ projection: 'albers' // make map albers projection
 async function geojsonFetch() {
   //
 };
+geojsonFetch();
 
 let response = await fetch('assets/us-covid-2020-rates.json');
 let us-covid-2020-rates = await response.json();
@@ -97,4 +98,3 @@ const source =
 
 legend.innerHTML = labels.join('') + source;
 
-geojsonFetch();
