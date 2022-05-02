@@ -58,26 +58,9 @@ map.addLayer({
 
 );
 
-          const layers = [
-            '0-20',
-            '21-40',
-            '41-60',
-            '61-90',
-            '91-130',
-            '131-170',
-            '171-200',
-            '201 and more'
-        ];
-        const colors = [
-            '#feebe270',
-            '#fcc5c070',
-            '#fa9fb570',
-            '#f768a170',
-            '#dd349770',
-            '#ae017e70',
-            '#7a017770',
-            '#b1002670'
-        ];
+const grades = [4, 5, 6], 
+      colors = ['rgb(208,209,230)', 'rgb(103,169,207)', 'rgb(1,108,89)'], 
+      radii = [5, 15, 20];
              
         // create legend
         const legend = document.getElementById('legend');
