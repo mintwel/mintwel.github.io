@@ -3,41 +3,183 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Covid Cases in the US in 2020</title>
+    <title>Choropleth Map of United States Covid-19 Rates in 2020</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+      h2, h3 {
+          margin: 10px;
+          font-size: 18px;
+      }
+      h3 {
+          font-size: 16px;
+      }
+      p {
+          margin: 10px;
+      }
+      #map {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+      }
 
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-        }
+      .map-overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
+          margin-left: 20px;
+          font-family: 'Open Sans', sans-serif;
+          overflow: auto;
+          border-radius: 3px;
+      }
+
+      #features {
+          top: 0;
+          height: 100px;
+          margin-top: 20px;
+          width: 250px;
+      }
+
+      .legend-key {
+          display: inline-block;
+          border-radius: 20%;
+          width: 10px;
+          height: 10px;
+          margin-right: 5px;
+      }
+
+      .mapboxgl-canvas-container.mapboxgl-interactive,
+      .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
+      cursor: unset;
+      }
     </style>
 </head>
 
 <body>
     <div id="map"></div>
-    <div id="legend"></div>
-    <div id="title">
-        COVID-19 Cases in the US in 2020
+    <div class='map-overlay' id='features'>
+        <h2>Covid-19 Rates by County in 2020</h2>
+        <div id='text-escription'>
+            <p>Pick a US county to see their Covid-19 cases!</p>
+        </div>
     </div>
-    <script src="js/main.js"></script>
+    <div class='map-overlay' id='legend'></div>
     <script>
+        // initialize basemmap
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
-        let map = new mapboxgl.Map({
+        const map = new mapboxgl.Map({
             container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11',
-            zoom: 5, // starting zoom
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            projection: 'albers',
+            zoom: 4, // starting zoom
             center: [-100, 40] // starting center
         });
+
+        // load data and add as layer
+        async function geojsonFetch() {
+            let response = await fetch('assets/us-covid-2020-rates.json');
+            let rateData = await response.json();
+
+            map.on('load', function loadingData() {
+                map.addSource('rateData', {
+                    type: 'geojson',
+                    data: rateData
+                });
+
+                map.addLayer({
+                    'id': 'rateData-layer',
+                    'type': 'fill',
+                    'source': 'rateData',
+                    'paint': {
+                        'fill-color': [
+                            'step',
+                            ['get', 'rates'],
+                            '#FFEDA0', 
+                            25, 
+                            '#FED976', 
+                            50, 
+                            '#FEB24C', 
+                            75, 
+                            '#FD8D3C', 
+                            100, 
+                            '#FC4E2A', 
+                            125, 
+                            '#E31A1C', 
+                            150, 
+                            '#BD0026', 
+                            175, 
+                            "#800026" 
+                        ],
+                        'fill-outline-color': '#BBBBBB',
+                        'fill-opacity': 0.7,
+                    }
+                });
+
+                const layers = [
+                    '0-24',
+                    '25-49',
+                    '50-74',
+                    '75-99',
+                    '100-124',
+                    '125-149',
+                    '150-174',
+                    '175 and more'
+                ];
+                const colors = [
+                    '#FFEDA0',
+                    '#FED976',
+                    '#FEB24C',
+                    '#FD8D3C',
+                    '#FC4E2A',
+                    '#E31A1C',
+                    '#BD0026',
+                    '#800026'
+                ];
+
+                // legend
+                const legend = document.getElementById('legend');
+                legend.innerHTML = "<b>Covid-19 Rates in 2020<br></b><br><br>";
+                const source =
+                    '<p style="text-align: right; font-size:10pt"> Data Source: <a href="https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv">The New York Times</a></p>';
+
+                layers.forEach((layer, i) => {
+                    const color = colors[i];
+                    const item = document.createElement('div');
+                    const key = document.createElement('span');
+                    key.className = 'legend-key';
+                    key.style.backgroundColor = color;
+
+                    const value = document.createElement('span');
+                    value.innerHTML = `${layer}`;
+                    item.appendChild(key);
+                    item.appendChild(value);
+                    legend.appendChild(item);
+                });
+                legend.innerHTML += source;
+            });
+
+            // click on tree to view magnitude in a popup
+            map.on('mousemove', ({point}) => {
+                const state = map.queryRenderedFeatures(point, {
+                    layers: ['rateData-layer']
+                });
+                document.getElementById('text-escription').innerHTML = state.length ?
+                `<h3>${state[0].properties.county + " County, " + state[0].properties.state}</h3>
+                <p><strong>Rate: <em>${state[0].properties.rates}</strong></em></p>` :
+                `<p>Pick a US county to see their Covid-19 cases!</p>`;
+            });
+        }
+        geojsonFetch();
     </script>
 
 </body>
