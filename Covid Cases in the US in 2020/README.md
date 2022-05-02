@@ -1,3 +1,4 @@
+#Covid Cases and Rates in the US in 2020
 This project is focused on tracking the counts and rates of Covid-19 cases in the United States in 2020.
 As such, the project is called "Covid Cases in the US in 2020."
 This project is important as it tracks a very relevant and important topic that affects our daily lives. The ability to visualize Covid-19 cases and rates can help us understand which communities were hit the hardest in 2020, as well as provides a reference during unprecedented times.
