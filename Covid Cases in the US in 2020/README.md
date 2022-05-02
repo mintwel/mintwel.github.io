@@ -5,6 +5,12 @@ This project is important as it tracks a very relevant and important topic that 
 
 ### Maps
 The first map, a chloropleth map, which tracks the Covid-19 cases by county in the US in 2020, can be found [here](https://mintwel.github.io/Covid%20Cases%20in%20the%20US%20in%202020/map1.html). This is a preview of it:
+![map1](https://user-images.githubusercontent.com/77073772/166177170-0f01daba-65cf-48f0-9f3b-ae8ef95ce3ca.jpg)
+
+
+The second map, a proportional symbols map, can be found [here](https://mintwel.github.io/Covid%20Cases%20in%20the%20US%20in%202020/map2.html). This is a preview:
+![map2](https://user-images.githubusercontent.com/77073772/166177175-013f772b-b2ea-4676-8c7b-660abce44546.jpg)
+
 
 
 ### Sources and Libraries
