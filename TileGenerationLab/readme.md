@@ -7,7 +7,7 @@ This project showcases four maps with generated tiles on a Mapbox baselayer. The
 
 ## Map Layers
 ### Tile Set 1 with Modified Basemap
-img
+
 Basemap: Monochrome Bubblegum from Mapbox
 Geography: Seattle, WA
 
