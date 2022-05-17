@@ -33,28 +33,6 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
   
   <script>
-      map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
-
-  map.addSource('tiles', {
-      'type': 'raster',
-      'tiles': [
-          'tiles/{z}/{x}/{y}.png'
-      ],
-      'tileSize': 256,
-      'attribution': 'Map tiles designed by Minttu Welander</a>'
-  });
-
-  map.addLayer({
-      'id': 'tiles',
-      'type': 'raster',
-      'layout': {
-          'visibility': 'none'
-      },
-      'source': 'tiles'
-  });
-
-
-});
     $(document).ready(function () {
       $("#basemapslider").slider({
             animate: true,
@@ -98,6 +76,38 @@
       <div id="basemapslider">
     </div>
   </div>
+      <script type="text/javascript">
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoibWludHdlbCIsImEiOiJjbDM5amI4YzkwYThyM2VwcGl2dDhsYTBjIn0.n2Bmt-SW77UqCjKRYSDldw';
+        let map = new mapboxgl.Map({
+            container: 'map', 
+            style: 'mapbox://styles/mapbox/monochrome',
+            zoom: 10, 
+            center: [-122.2559435, 47.6002614]
+        });
+    
+  map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
+
+  map.addSource('tiles', {
+      'type': 'raster',
+      'tiles': [
+          'tiles/{z}/{x}/{y}.png'
+      ],
+      'tileSize': 256,
+      'attribution': 'Map tiles designed by Minttu Welander</a>'
+  });
+
+  map.addLayer({
+      'id': 'tiles',
+      'type': 'raster',
+      'layout': {
+          'visibility': 'none'
+      },
+      'source': 'tiles'
+  });
+
+
+});
   </div>
 </body>
 </html>
