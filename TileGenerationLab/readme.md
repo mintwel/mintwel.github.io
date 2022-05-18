@@ -29,5 +29,5 @@ Basemap: Monochrome Bubblegum from Mapbox
 Geography: Seattle, WA
 
 ## Data Sources and Credits
-CSV data from:
-Basemap from Mapbox
+CSV data from the [City of Seattle](https://data-seattlecitygis.opendata.arcgis.com/)
+Basemap from [Mapbox](https://www.mapbox.com/)
