@@ -84,26 +84,90 @@
 
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
 
-            map.addSource('tiles', {
+            map.addSource('tileset1', {
                 'type': 'raster',
                 'tiles': [
-                    'tiles/{z}/{x}/{y}.png'
+                    'assets/tileset1/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Minttu Welander</a>'
             });
+            
+            map.addSource('tileset2', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tileset2/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Minttu Welander</a>'
+            });
+            
+            map.addSource('basemap', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/basemap/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Minttu Welander</a>'
+            });
+            
+            map.addSource('green', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/green/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Minttu Welander</a>'
+            });
+            
+            map.addLayer({
+                'id': 'basemap',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'basemap'
+            });
+            
+           map.addLayer({
+                'id': 'parks',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'tileset1'
+            });
+            
+           map.addLayer({
+                'id': 'tree-canopy',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'tileset2'
+            });
+            
+            map.addLayer({
+                'id': 'green',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'green'
+            });
+
         });
 
 
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('tiles') || !map.getLayer('tiles')) {
+            if (!map.getLayer('basemap', 'parks', 'tree-canopy', 'green')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['tiles', 'tiles'];
+            const toggleableLayerIds = ['basemap', 'parks', 'tree-canopy', 'green'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
